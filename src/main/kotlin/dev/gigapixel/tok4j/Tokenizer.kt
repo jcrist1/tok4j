@@ -1,4 +1,5 @@
 package dev.gigapixel.tok4j
+import cz.adamh.utils.NativeUtils
 
 
 class Tokenizer {
@@ -11,7 +12,9 @@ class Tokenizer {
     }
 
     companion object {
+        @JvmStatic
         fun newFromBytes(bytes: ByteArray): Tokenizer {
+            NativeUtils.loadLibraryFromJar("/libtok4jbindings.dylib")
             val model = fromBytes(bytes)
             CLEANER.register(model, TokenizerCleaner(model.handle));
             return model
