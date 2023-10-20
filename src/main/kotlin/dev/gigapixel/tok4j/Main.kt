@@ -6,7 +6,7 @@ val CLEANER = java.lang.ref.Cleaner.create()
 object Main {
     @JvmStatic
     fun main(args: Array<String>) {
-        System.loadLibrary("tok4jbindings")
+        // System.loadLibrary("tok4jbindings")
         val bytes = resourceToByteArray("/tokenizer.json")
 
 
