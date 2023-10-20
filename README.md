@@ -9,8 +9,5 @@ cp target/release/libtok4jbindings.dylib ../main/resources/
 
 Then you should be able to invoke this with
 ```sh
-cd src/tok4jbindings
-cargo build --release
-cd ../../
-gradle run
+gradle publishToMavenLocal
 ```
