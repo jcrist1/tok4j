@@ -1,7 +1,7 @@
 # tok4j
 tokenizers for java
 
-
+You should be able to invoke this with
 ```sh
--Djava.library.path=src/tok4jbindings/target/release
+gradle run
 ```

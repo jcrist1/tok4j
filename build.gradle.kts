@@ -19,6 +19,10 @@ dependencies {
     testImplementation(kotlin("test"))
 }
 
+
+
+
+
 tasks.test {
     useJUnitPlatform()
 }
@@ -28,6 +32,6 @@ kotlin {
 }
 
 application {
-    applicationDefaultJvmArgs = mutableListOf("-Djava.library.path=" + file("${buildDir}/tok4jbindings/target/release").absolutePath)
-    mainClass.set("Main")
+    applicationDefaultJvmArgs = mutableListOf("-Djava.library.path=" + file("src/tok4jbindings/target/release").absolutePath)
+    mainClass.set("dev.gigapixel.tok4j.Main")
 }
