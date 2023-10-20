@@ -11,7 +11,11 @@ repositories {
     mavenCentral()
 }
 
+// declare a "configuration" named "someConfiguration"
+val someConfiguration by configurations.creating
+
 dependencies {
+    implementation("commons-io:commons-io:2.14.0")
     testImplementation(kotlin("test"))
 }
 

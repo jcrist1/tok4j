@@ -1,3 +1,5 @@
+use jni::JNIEnv;
+
 pub(crate) type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Debug, thiserror::Error)]
@@ -6,6 +8,8 @@ pub enum Error {
     Jni(#[from] jni::errors::Error),
     #[error("Tokenizer error: {0}")]
     Tokenizer(#[from] tokenizers::Error),
+    #[error("Error trying to read JavaString as utf8: {0}")]
+    Utf8(#[from] std::str::Utf8Error),
     #[error("{context_message}, caused by {err}")]
     Contextual {
         context_message: String,
@@ -30,6 +34,25 @@ impl Error {
                 context_message: message,
                 err: Box::new(err),
             },
+        }
+    }
+}
+
+pub(crate) trait JError<T> {
+    fn j_throw(self, env: &mut JNIEnv<'_>) -> T;
+}
+
+impl<T: Default> JError<T> for Result<T> {
+    fn j_throw(self, env: &mut JNIEnv<'_>) -> T {
+        match self {
+            Err(err) => {
+                env.throw_new("java/lang/Exception", format!("{err}"))
+                    .unwrap_or_else(|err_2| {
+                        panic!("Failed to throw exception: {err_2}. Trying to throw {err}")
+                    });
+                T::default()
+            }
+            Ok(inner) => inner,
         }
     }
 }

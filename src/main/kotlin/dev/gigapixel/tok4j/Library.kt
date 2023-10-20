@@ -1,4 +1,5 @@
 package dev.gigapixel.tok4j
+import org.apache.commons.io.IOUtils.resourceToByteArray
 
 val CLEANER = java.lang.ref.Cleaner.create()
 
@@ -6,19 +7,20 @@ object Main {
     @JvmStatic
     fun main(args: Array<String>) {
         System.loadLibrary("tok4jbindings")
+        val bytes = resourceToByteArray("/tokenizer.json")
 
 
         (0..100).forEach {
             println(it)
-            val model= Model.newFromStatic();
-            println("$model");
+            val tokenizer = Tokenizer.newFromBytes(bytes);
+            println("$tokenizer");
             System.gc()
         }
 
-        val model = Model.newFromStatic();
+        val tokenizer = Tokenizer.newFromBytes(bytes)
 
         val input = "\"Hello Mr. Fox\", said Mrs. Badger. \"How are you today?\""
-        model.tokenize(input).forEach {
+        tokenizer.tokenize(input).forEach {
             print("[$it]")
         }
     }
