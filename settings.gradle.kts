@@ -10,3 +10,4 @@ plugins {
 }
 
 rootProject.name = "tok4j"
+include("lib")
