@@ -3,7 +3,7 @@ tokenizers for java
 You will need to manually compile
 ```sh
 cd src/tok4jbinding
-cargo buil --release
+cargo build --release
 cp target/release/libtok4jbindings.dylib ../main/resources/
 ```
 
